@@ -1,3 +1,3 @@
-module go-reload
+module reloadgo
 
 go 1.22.3
