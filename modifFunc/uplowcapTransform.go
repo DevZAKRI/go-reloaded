@@ -11,6 +11,9 @@ func Upper(text [][]string) [][]string {
 	for i := 0; i < nLines; i++ {
 		var newLine []string
 		for j := 0; j < len(text[i]); j++ {
+			if j == 0 && text[i][j] == "(up)" {
+				continue
+			}
 			if j < len(text[i])-1 && text[i][j+1] == "(up)" {
 				newLine = append(newLine, strings.ToUpper(text[i][j]))
 				j++
@@ -29,6 +32,9 @@ func Lower(text [][]string) [][]string {
 	for i := 0; i < nLines; i++ {
 		var newLine []string
 		for j := 0; j < len(text[i]); j++ {
+			if j == 0 && text[i][j] == "(low)" {
+				continue
+			}
 			if j < len(text[i])-1 && text[i][j+1] == "(low)" {
 				newLine = append(newLine, strings.ToLower(text[i][j]))
 				j++
@@ -47,6 +53,9 @@ func Capitalize(text [][]string) [][]string {
 	for i := 0; i < nLines; i++ {
 		var newLine []string
 		for j := 0; j < len(text[i]); j++ {
+			if j == 0 && text[i][j] == "(cap)" {
+				continue
+			}
 			if j < len(text[i])-1 && text[i][j+1] == "(cap)" {
 				word := strings.ToLower(text[i][j])
 				newWord := ""

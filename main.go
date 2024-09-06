@@ -32,15 +32,7 @@ func main() {
 		fileContent[i] = append(fileContent[i], strings.Fields(content[i])...)
 	}
 	text := reloadgo.EditFILE(fileContent)
-	// fmt.Printf("%v", text[1][3][:len(text[1][3])-1])
-	fmt.Println(text)
-	// for i := 0; i < len(text); i++ {
-	// 	err = os.WriteFile(outputFile, []byte(strings.Join(text[i], " ")), 0o644)
-	// 	if err != nil {
-	// 		fmt.Println("Error writing to file:", err)
-	// 		return
-	// 	}
-	// }
+	// fmt.Println(text)
 	outputText := ""
 	for i := 0; i < len(text); i++ {
 		for j := 0; j < len(text[i]); j++ {

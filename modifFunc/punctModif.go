@@ -2,6 +2,7 @@ package reloadgo
 
 func PunctModif(text [][]string) [][]string {
 	for i := 0; i < len(text); i++ {
+		// text[i] = specialMark(text[i])
 		for j := 0; j < len(text[i]); j++ {
 			word := ""
 			pMark := 0
@@ -22,10 +23,6 @@ func PunctModif(text [][]string) [][]string {
 		}
 	}
 	return text
-}
-
-func specialcas(){
-
 }
 
 func isPunctuation(char rune) bool {
