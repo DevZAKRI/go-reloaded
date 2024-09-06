@@ -77,6 +77,9 @@ func SpecialCase(text [][]string) [][]string {
 				switch text[i][j+1] {
 				case "(low,":
 					numWord, _ := strconv.Atoi(text[i][j+2][:len(text[i][j+2])-1])
+					if numWord > len(text[i][:j+1]) {
+						numWord = len(text[i][:j+1])
+					}
 					for k := 0; k < numWord; k++ {
 						text[i][j-k] = strings.ToLower(text[i][j-k])
 					}
@@ -86,6 +89,9 @@ func SpecialCase(text [][]string) [][]string {
 					text[i] = firstHalf
 				case "(up,":
 					numWord, _ := strconv.Atoi(text[i][j+2][:len(text[i][j+2])-1])
+					if numWord > len(text[i][:j+1]) {
+						numWord = len(text[i][:j+1])
+					}
 					for k := 0; k < numWord; k++ {
 						text[i][j-k] = strings.ToUpper(text[i][j-k])
 					}
@@ -95,6 +101,9 @@ func SpecialCase(text [][]string) [][]string {
 					text[i] = firstHalf
 				case "(cap,":
 					numWord, _ := strconv.Atoi(text[i][j+2][:len(text[i][j+2])-1])
+					if numWord > len(text[i][:j+1]) {
+						numWord = len(text[i][:j+1])
+					}
 					for k := 0; k < numWord; k++ {
 						text[i][j-k] = capWORD(text[i][j-k])
 					}
@@ -112,13 +121,11 @@ func SpecialCase(text [][]string) [][]string {
 
 func capWORD(word string) string {
 	newWord := ""
-	m := 0
 	for idx, char := range word {
-		if idx == m && char >= 'a' && char <= 'z' {
+		if idx == 0 {
 			newWord += string(char - 32)
 		} else {
 			newWord += string(char)
-			m++
 		}
 	}
 	return newWord
