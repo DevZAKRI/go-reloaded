@@ -1,3 +1,4 @@
-(cap) 1E (hex) files (low) ! 10 (bin) new lines .... were (up, 78) added
+(hex) (cap) 
+(up) 1E (hex) files (low) ! 10 (bin) new (up) lines .... were (up, 78) added
 LEt's TEST (low, 2) (cap) the a animal new (cap, 2) line a house now
 I 'was a sitting ' over ; there ,..and (cap) then BAMM !!

@@ -4,40 +4,22 @@ import (
 	"strconv"
 )
 
-func HexToDecimal(text [][]string) [][]string {
-	nLines := len(text)
-
-	for i := 0; i < nLines; i++ {
-		var newLine []string
-		for j := 0; j < len(text[i]); j++ {
-			if j < len(text[i])-1 && text[i][j+1] == "(hex)" {
-				valDec, _ := strconv.ParseInt(text[i][j], 16, 64)
-				newLine = append(newLine, strconv.Itoa(int(valDec)))
-				j++
-			} else {
-				newLine = append(newLine, text[i][j])
-			}
-		}
-		text[i] = newLine
+func HexToDecimal(text []string) []string {
+	if len(text) < 1 {
+		return []string{}
+	} else {
+		valDec, _ := strconv.ParseInt(text[len(text)-1], 16, 64)
+		text[len(text)-1] = strconv.Itoa(int(valDec))
 	}
 	return text
 }
 
-func BinToDecimal(text [][]string) [][]string {
-	nLines := len(text)
-
-	for i := 0; i < nLines; i++ {
-		var newLine []string
-		for j := 0; j < len(text[i]); j++ {
-			if j < len(text[i])-1 && text[i][j+1] == "(bin)" {
-				valDec, _ := strconv.ParseInt(text[i][j], 2, 64)
-				newLine = append(newLine, strconv.Itoa(int(valDec)))
-				j++
-			} else {
-				newLine = append(newLine, text[i][j])
-			}
-		}
-		text[i] = newLine
+func BinToDecimal(text []string) []string {
+	if len(text) <= 1 {
+		return []string{}
+	} else {
+		valDec, _ := strconv.ParseInt(text[len(text)-1], 2, 64)
+		text[len(text)-1] = strconv.Itoa(int(valDec))
 	}
 	return text
 }
