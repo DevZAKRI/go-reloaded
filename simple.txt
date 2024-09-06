@@ -1,2 +1,3 @@
-1E (hex) files ! 10 (bin) new lines were added
-LEt's Test the new line now
+1E (hex) files (up) ! 10 (bin) new lines were (up, 2) added
+LEt's TEST (low, 2) the new (cap, 2) line now
+I was sitting over there ,and (cap) then BAMM !!

@@ -32,25 +32,8 @@ func main() {
 		fileContent[i] = append(fileContent[i], strings.Fields(content[i])...)
 	}
 	text := reloadgo.EditFILE(fileContent)
+	// fmt.Printf("%v", text[1][3][:len(text[1][3])-1])
 	fmt.Println(text)
-	// fileContent := strings.Fields(string(content))
-	// newFileContent := []string{}
-
-	// for i := 0; i < len(fileContent); i++ {
-	// 	val := fileContent[i]
-	// 	if i < len(fileContent)-1 && fileContent[i+1] == "(hex)" {
-	// 		valDec, err := strconv.ParseInt(val, 16, 64)
-	// 		if err != nil {
-	// 			fmt.Println("Error converting hex to decimal:", err)
-	// 			return
-	// 		}
-	// 		newFileContent = append(newFileContent, strconv.Itoa(int(valDec)))
-	// 		i++
-	// 	} else {
-	// 		newFileContent = append(newFileContent, val)
-	// 	}
-	// }
-
 	// err = os.WriteFile(outputFile, []byte(strings.Join(newFileContent, " ")), 0o644)
 	// if err != nil {
 	// 	fmt.Println("Error writing to file:", err)
