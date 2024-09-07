@@ -4,53 +4,25 @@ func isPunctuation(char rune) bool {
 	return char == '.' || char == ',' || char == '!' || char == '?' || char == ':' || char == ';'
 }
 
-func PunctModif(text [][]string) [][]string {
-	for i := 0; i < len(text); i++ {
-		for j := 0; j < len(text[i]); j++ {
-			word := ""
-			pMark := 0
-			editLine := text[i][:j]
-			for idx, char := range text[i][j] {
-				if j > 0 && idx == pMark && isPunctuation(char) {
-					text[i][j-1] += string(char)
-					pMark++
-				} else if j > 0 && len(text[i]) != 1 && len(text[i][j]) == 1 && isPunctuation(char) {
-					text[i][j-1] += string(char)
-				} else {
-					word += string(char)
+func ModifiePunctuation(text string) string {
+	newText := ""
+	for idx, char := range text {
+		if isPunctuation(char) {
+			if idx == 0 || idx == len(text)-1 {
+				newText += string(char)
+				if idx == 0 && len(text) > 1 && !isPunctuation(rune(text[idx-1])) {
+					newText += " "
 				}
+			} else if isSpace(text[idx-1]) && idx < len(text)-1 && !isPunctuation(rune(text[idx-1])) {
+				newText += " " + string(char)
 			}
-			editLine = append(editLine, word)
-			if j+1 < len(text[i]) { // Check to prevent out of range
-				editLine = append(editLine, text[i][j+1:]...)
-			}
-			text[i] = editLine
+		} else {
+			newText += string(char)
 		}
 	}
-	return text
+	return newText
 }
 
-// func PunctModif(text [][]string) [][]string {
-// 	for i := 0; i < len(text); i++ {
-// 		// text[i] = specialMark(text[i])
-// 		for j := 0; j < len(text[i]); j++ {
-// 			word := ""
-// 			pMark := 0
-// 			editLine := text[i][:j]
-// 			for idx, char := range text[i][j] {
-// 				if j > 0 && idx == pMark && isPunctuation(char) {
-// 					text[i][j-1] += string(char)
-// 					pMark++
-// 				} else if len(text[i]) != 1 && len(text[i][j]) == 1 && isPunctuation(char) {
-// 					text[i][j-1] += string(char)
-// 				} else {
-// 					word += string(char)
-// 				}
-// 			}
-// 			editLine = append(editLine, word)
-// 			editLine = append(editLine, text[i][j+1:]...)
-// 			text[i] = editLine
-// 		}
-// 	}
-// 	return text
-// }
+func isSpace(char byte) bool {
+	return char == ' '
+}

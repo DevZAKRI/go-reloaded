@@ -24,7 +24,8 @@ func main() {
 
 	EditedContent := reloadgo.EditFILE(fileContent)
 	outputText := formatOutput(EditedContent)
-	// fmt.Println(outputText)
+	finalText := reloadgo.ModifiePunctuation(outputText)
+	fmt.Println(finalText)
 
 	if err := writeFile(outputFile, outputText); err != nil {
 		fmt.Println("Error writing to file:", err)
@@ -55,6 +56,7 @@ func formatOutput(content [][]string) string {
 			outputBuilder.WriteString("\n")
 		}
 	}
+
 	return outputBuilder.String()
 }
 

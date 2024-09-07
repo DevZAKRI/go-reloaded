@@ -70,7 +70,7 @@ func EditFILE(text [][]string) [][]string {
 
 	// text = formatText(text)
 	text = AtoAN(text)
-	text = PunctModif(text)
+	//text = FormatPunctuation(text)
 	return text
 }
 
