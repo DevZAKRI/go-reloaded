@@ -9,7 +9,7 @@ func EditFILE(text [][]string) [][]string {
 	// text = PunctModif(text)
 	for i := 0; i < len(text); i++ {
 		for j := 0; j < len(text[i]); j++ {
-			if modifieInstance(text[i][j]) {
+			if isModifier(text[i][j]) {
 				switch text[i][j] {
 				case "(hex)":
 					modifiedLine := HexToDecimal(text[i][:j])
@@ -66,46 +66,30 @@ func EditFILE(text [][]string) [][]string {
 				}
 			}
 		}
-		// text[i] = specialMark2(text[i])
 	}
-	text = PunctModif(text)
-	text = AtoAN(text)
 
+	// text = formatText(text)
+	text = AtoAN(text)
+	text = PunctModif(text)
 	return text
 }
 
-func modifieInstance(word string) bool {
-	if word == "(hex)" || word == "(bin)" || word == "(up)" || word == "(low)" || word == "(cap)" || word == "(up," || word == "(low," || word == "(cap," {
+func isModifier(word string) bool {
+	switch word {
+	case "(hex)", "(bin)", "(up)", "(low)", "(cap)", "(up,", "(low,", "(cap,":
 		return true
 	}
 	return false
 }
 
 func checkCase(text string) bool {
-	if strings.HasSuffix(text, ")") {
-		if len(text) <= 1 {
-			return false
-		}
-		for i := 0; i < len(text)-1; i++ {
-			if text[i] < '0' || text[i] > '9' {
+	if strings.HasSuffix(text, ")") && len(text) > 1 {
+		for _, char := range text[:len(text)-1] {
+			if char < '0' || char > '9' {
 				return false
 			}
 		}
-
 		return true
 	}
 	return false
 }
-
-// func EditFILE(text [][]string) [][]string {
-// 	// input := HexToDecimal(text)
-// 	// input = BinToDecimal(input)
-// 	// input = PunctModif(input)
-// 	// input = Upper(input)
-// 	// input = Lower(input)
-// 	// // input = PunctModif(input)
-// 	// input = Capitalize(input)
-// 	// input = SpecialCase(input)
-// 	// input = AtoAN(input)
-// 	// return input
-// }

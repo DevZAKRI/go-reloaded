@@ -5,10 +5,11 @@ import (
 )
 
 func HexToDecimal(text []string) []string {
-	if len(text) < 1 {
+	if len(text) == 0 {
 		return []string{}
-	} else {
-		valDec, _ := strconv.ParseInt(text[len(text)-1], 16, 64)
+	}
+	valDec, err := strconv.ParseInt(text[len(text)-1], 16, 64)
+	if err == nil {
 		text[len(text)-1] = strconv.Itoa(int(valDec))
 	}
 	return text
@@ -17,8 +18,9 @@ func HexToDecimal(text []string) []string {
 func BinToDecimal(text []string) []string {
 	if len(text) <= 1 {
 		return []string{}
-	} else {
-		valDec, _ := strconv.ParseInt(text[len(text)-1], 2, 64)
+	}
+	valDec, err := strconv.ParseInt(text[len(text)-1], 2, 64)
+	if err == nil {
 		text[len(text)-1] = strconv.Itoa(int(valDec))
 	}
 	return text
