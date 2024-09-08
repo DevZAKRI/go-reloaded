@@ -24,7 +24,7 @@ func Capitalize(text []string) []string {
 	if len(text) == 0 {
 		return text
 	}
-	text[len(text)-1] = CapitalizeWord(strings.ToLower(text[len(text)-1]))
+	text[len(text)-1] = CapitalizeWord2(strings.ToLower(text[len(text)-1]))
 	return text
 }
 

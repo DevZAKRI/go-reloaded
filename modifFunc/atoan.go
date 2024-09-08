@@ -19,7 +19,7 @@ func replaceA(word string) string {
 	if word == "a" {
 		return "an"
 	}
-	return "AN"
+	return "An"
 }
 
 func isVowel(char string) bool {

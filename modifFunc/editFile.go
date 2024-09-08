@@ -5,7 +5,7 @@ import (
 	"strings"
 )
 
-func EditFILE(text [][]string) [][]string {
+func EditFILE(text [][]string) string {
 	// text = PunctModif(text)
 	for i := 0; i < len(text); i++ {
 		for j := 0; j < len(text[i]); j++ {
@@ -67,11 +67,10 @@ func EditFILE(text [][]string) [][]string {
 			}
 		}
 	}
-
-	// text = formatText(text)
 	text = AtoAN(text)
-	//text = FormatPunctuation(text)
-	return text
+	preOutputText := formatOutput(text)
+	finalText := ModifiePunctuation(preOutputText)
+	return finalText
 }
 
 func isModifier(word string) bool {
@@ -92,4 +91,16 @@ func checkCase(text string) bool {
 		return true
 	}
 	return false
+}
+
+func formatOutput(content [][]string) string {
+	var outputBuilder strings.Builder
+	for i, line := range content {
+		outputBuilder.WriteString(strings.Join(line, " "))
+		if i < len(content)-1 {
+			outputBuilder.WriteString("\n")
+		}
+	}
+
+	return outputBuilder.String()
 }
