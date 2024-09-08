@@ -27,7 +27,7 @@ func main() {
 	finalText := reloadgo.ModifiePunctuation(outputText)
 	fmt.Println(finalText)
 
-	if err := writeFile(outputFile, outputText); err != nil {
+	if err := writeFile(outputFile, finalText); err != nil {
 		fmt.Println("Error writing to file:", err)
 		return
 	}

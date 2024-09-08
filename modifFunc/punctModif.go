@@ -1,7 +1,6 @@
 package reloadgo
 
 import (
-	"regexp"
 	"strings"
 )
 
@@ -11,7 +10,6 @@ func isPunctuation(char rune) bool {
 
 func ModifiePunctuation(text string) string {
 	var newText string
-	// inQuote := false
 
 	for idx, char := range text {
 		var prevChar, nextChar rune
@@ -43,7 +41,7 @@ func ModifiePunctuation(text string) string {
 		}
 		newText += string(char)
 	}
-	newText = formatPunctuation(newText)
+	newText = FixQuote(newText)
 	return newText
 }
 
@@ -51,26 +49,51 @@ func isSpace(char rune) bool {
 	return char == ' '
 }
 
-func isApostrophe(char rune) bool {
-	return char == '\''
-}
+func FixQuote(input string) string {
+	lines := strings.Split(input, "\n")
+	var finalResult strings.Builder
 
-func checkApostrophe(text string) bool {
-	for _, char := range text {
-		if isApostrophe(char) {
-			return true
+	for _, line := range lines {
+		var result strings.Builder
+		inQuotes := false
+		startQuote := -1
+		var tempResult string
+
+		for i, ch := range line {
+			if ch == '\'' {
+				if !inQuotes {
+					if i == 0 || isSpace(rune(line[i-1])) {
+						inQuotes = true
+						startQuote = result.Len()
+						result.WriteRune(ch)
+					} else {
+						result.WriteRune(ch)
+					}
+				} else {
+					if i == len(line)-1 || isSpace(rune(line[i+1])) {
+						inQuotes = false
+						tempResult = result.String()
+						quotedContent := strings.TrimSpace(tempResult[startQuote+1:])
+						result.Reset()
+						result.WriteString(tempResult[:startQuote+1])
+						result.WriteString(quotedContent)
+						result.WriteRune(ch)
+					} else {
+						result.WriteRune(ch)
+					}
+				}
+			} else if isSpace(ch) {
+				if result.Len() > 0 && result.String()[result.Len()-1] != ' ' {
+					result.WriteRune(' ')
+				}
+			} else {
+				result.WriteRune(ch)
+			}
 		}
-	}
-	return false
-}
 
-func formatPunctuation(input string) string {
-	quotedText := regexp.MustCompile(`'([^']*)'`)
-	text := quotedText.ReplaceAllStringFunc(input, func(match string) string {
-		content := strings.TrimSpace(match[1 : len(match)-1])
-		return "'" + content + "' "
-	})
-	text = strings.TrimSpace(text)
-	nSpaceRemover := regexp.MustCompile(`\s{2,}`)
-	return nSpaceRemover.ReplaceAllString(text, " ")
+		finalResult.WriteString(strings.TrimSpace(result.String()))
+		finalResult.WriteRune('\n')
+	}
+
+	return strings.TrimSpace(finalResult.String())
 }
