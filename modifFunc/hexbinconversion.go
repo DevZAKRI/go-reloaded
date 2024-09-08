@@ -16,7 +16,7 @@ func HexToDecimal(text []string) []string {
 }
 
 func BinToDecimal(text []string) []string {
-	if len(text) <= 1 {
+	if len(text) == 0 {
 		return []string{}
 	}
 	valDec, err := strconv.ParseInt(text[len(text)-1], 2, 64)

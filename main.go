@@ -18,14 +18,14 @@ func main() {
 	inputFile, outputFile := os.Args[1], os.Args[2]
 	fileContent, err := readFile(inputFile)
 	if err != nil {
-		fmt.Println("Error opening file:", err)
+		fmt.Println("Encounter the following error: \"", err, "\" fix and try again:")
 		return
 	}
-
-	EditedContent := reloadgo.EditFILE(fileContent)
-	outputText := formatOutput(EditedContent)
-	finalText := reloadgo.ModifiePunctuation(outputText)
-	fmt.Println(finalText)
+	if strings.HasSuffix(outputFile, ".go") {
+		fmt.Println("The output file SHOULD NOT be a go file")
+		return
+	}
+	finalText := reloadgo.EditFILE(fileContent)
 
 	if err := writeFile(outputFile, finalText); err != nil {
 		fmt.Println("Error writing to file:", err)
@@ -46,18 +46,6 @@ func readFile(fileName string) ([][]string, error) {
 		content = append(content, strings.Fields(scanner.Text()))
 	}
 	return content, scanner.Err()
-}
-
-func formatOutput(content [][]string) string {
-	var outputBuilder strings.Builder
-	for i, line := range content {
-		outputBuilder.WriteString(strings.Join(line, " "))
-		if i < len(content)-1 {
-			outputBuilder.WriteString("\n")
-		}
-	}
-
-	return outputBuilder.String()
 }
 
 func writeFile(fileName, content string) error {

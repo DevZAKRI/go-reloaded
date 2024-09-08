@@ -2,6 +2,7 @@ package reloadgo
 
 import (
 	"strings"
+	"unicode"
 )
 
 func isPunctuation(char rune) bool {
@@ -57,29 +58,32 @@ func FixQuote(input string) string {
 		var result strings.Builder
 		inQuotes := false
 		startQuote := -1
-		var tempResult string
-
 		for i, ch := range line {
 			if ch == '\'' {
-				if !inQuotes {
-					if i == 0 || isSpace(rune(line[i-1])) {
+				QuoteinsideWord := false
+				if i > 0 && !unicode.IsSpace(rune(line[i-1])) && i < len(line)-1 && !unicode.IsSpace(rune(line[i+1])) {
+					QuoteinsideWord = true
+				}
+
+				if QuoteinsideWord {
+					result.WriteRune(ch)
+				} else {
+					if !inQuotes {
 						inQuotes = true
 						startQuote = result.Len()
 						result.WriteRune(ch)
 					} else {
-						result.WriteRune(ch)
-					}
-				} else {
-					if i == len(line)-1 || isSpace(rune(line[i+1])) {
 						inQuotes = false
-						tempResult = result.String()
+						tempResult := result.String()
 						quotedContent := strings.TrimSpace(tempResult[startQuote+1:])
 						result.Reset()
 						result.WriteString(tempResult[:startQuote+1])
 						result.WriteString(quotedContent)
-						result.WriteRune(ch)
-					} else {
-						result.WriteRune(ch)
+						result.WriteRune('\'')
+
+						if quotedContent == "" && i < len(line)-1 {
+							result.WriteRune(' ')
+						}
 					}
 				}
 			} else if isSpace(ch) {
