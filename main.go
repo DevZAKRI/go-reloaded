@@ -21,8 +21,8 @@ func main() {
 		fmt.Println("Encounter the following error: \"", err, "\" fix and try again:")
 		return
 	}
-	if strings.HasSuffix(outputFile, ".go") {
-		fmt.Println("The output file SHOULD NOT be a go file")
+	if !strings.HasSuffix(outputFile, ".txt") && !strings.HasSuffix(inputFile, ".txt") {
+		fmt.Println("The input and output file SHOULD Only be a .txt file")
 		return
 	}
 	finalText := reloadgo.EditFILE(fileContent)

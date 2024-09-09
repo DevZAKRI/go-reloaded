@@ -37,7 +37,7 @@ func EditFILE(text [][]string) string {
 					text[i] = modifiedLine
 					j--
 				case "(up,":
-					if checkCase(text[i][j+1]) {
+					if j < len(text[i])-1 && checkCase(text[i][j+1]) {
 						sCase := "up"
 						numWord, _ := strconv.Atoi(text[i][j+1][:len(text[i][j+1])-1])
 						modifiedLine := SpecialCase(text[i][:j], sCase, numWord)
@@ -46,7 +46,7 @@ func EditFILE(text [][]string) string {
 						j--
 					}
 				case "(low,":
-					if checkCase(text[i][j+1]) {
+					if j < len(text[i])-1 && checkCase(text[i][j+1]) {
 						sCase := "low"
 						numWord, _ := strconv.Atoi(text[i][j+1][:len(text[i][j+1])-1])
 						modifiedLine := SpecialCase(text[i][:j], sCase, numWord)
@@ -55,7 +55,7 @@ func EditFILE(text [][]string) string {
 						j--
 					}
 				case "(cap,":
-					if checkCase(text[i][j+1]) {
+					if j < len(text[i])-1 && checkCase(text[i][j+1]) {
 						sCase := "cap"
 						numWord, _ := strconv.Atoi(text[i][j+1][:len(text[i][j+1])-1])
 						modifiedLine := SpecialCase(text[i][:j], sCase, numWord)

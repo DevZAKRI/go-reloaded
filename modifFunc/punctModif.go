@@ -80,6 +80,9 @@ func FixQuote(input string) string {
 						result.WriteString(tempResult[:startQuote+1])
 						result.WriteString(quotedContent)
 						result.WriteRune('\'')
+						if i+1 < len(line) && !isSpace(rune(line[i+1])) {
+							result.WriteRune(' ')
+						}
 
 						if quotedContent == "" && i < len(line)-1 {
 							result.WriteRune(' ')
