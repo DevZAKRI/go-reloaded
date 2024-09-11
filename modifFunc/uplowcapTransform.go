@@ -2,6 +2,7 @@ package reloadgo
 
 import (
 	"strings"
+	"unicode"
 )
 
 func Upper(text []string) []string {
@@ -24,7 +25,7 @@ func Capitalize(text []string) []string {
 	if len(text) == 0 {
 		return text
 	}
-	text[len(text)-1] = CapitalizeWord2(strings.ToLower(text[len(text)-1]))
+	text[len(text)-1] = CapWord(strings.ToLower(text[len(text)-1]))
 	return text
 }
 
@@ -42,7 +43,7 @@ func SpecialCase(text []string, sCase string, nWords int) []string {
 		case "low":
 			text[len(text)-1-k] = strings.ToLower(text[len(text)-1-k])
 		case "cap":
-			text[len(text)-1-k] = CapitalizeWord2(text[len(text)-1-k])
+			text[len(text)-1-k] = CapWord(text[len(text)-1-k])
 		}
 	}
 	return text
@@ -56,30 +57,41 @@ func CapitalizeWord(word string) string {
 	return strings.ToUpper(string(word[0])) + word[1:]
 }
 
-func capWORD(word string) string {
-	newWord := ""
-	for idx, char := range word {
-		if idx == 0 {
-			newWord += string(char - 32)
-		} else {
-			newWord += string(char)
-		}
-	}
-	return newWord
-}
+// func capWORD(word string) string {
+// 	newWord := ""
+// 	for idx, char := range word {
+// 		if idx == 0 {
+// 			newWord += string(char - 32)
+// 		} else {
+// 			newWord += string(char)
+// 		}
+// 	}
+// 	return newWord
+// }
 
 // capitalize first letter in a word ignore special char
-func CapitalizeWord2(word string) string {
-	newWord := ""
-	for i := 0; i < len(word); i++ {
-		if isPunctuation(rune(word[i])) || word[i] == '\'' {
-			newWord += string(word[i])
-		} else if !(word[i] >= 'a' && word[i] <= 'z') {
-			newWord += string(word[i])
-		} else {
-			newWord += capWORD(string(word[i])) + word[i+1:]
-			break
+// doesn't capitalize special characters like é à
+// func CapitalizeWord2(word string) string {
+// 	newWord := ""
+// 	for i := 0; i < len(word); i++ {
+// 		if isPunctuation(rune(word[i])) || word[i] == '\'' {
+// 			newWord += string(word[i])
+// 		} else if !(word[i] >= 'a' && word[i] <= 'z') {
+// 			newWord += string(word[i])
+// 		} else {
+// 			newWord += capWORD(string(word[i])) + word[i+1:]
+// 			break
+// 		}
+// 	}
+// 	return newWord
+// }
+
+func CapWord(word string) string {
+	runes := []rune(word)
+	for i, char := range runes {
+		if unicode.IsLetter(char) {
+			return string(runes[:i]) + string(unicode.ToUpper(char)) + string(runes[i+1:])
 		}
 	}
-	return newWord
+	return word
 }
