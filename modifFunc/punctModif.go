@@ -1,7 +1,6 @@
 package reloadgo
 
 import (
-	"fmt"
 	"strings"
 	"unicode"
 )
@@ -54,7 +53,7 @@ func isSpace(char rune) bool {
 
 func FixQuote(input string) string {
 	lines := strings.Split(input, "\n")
-	fmt.Println(lines)
+	// fmt.Println(lines)
 	var finalResult strings.Builder
 
 	for _, line := range lines {
