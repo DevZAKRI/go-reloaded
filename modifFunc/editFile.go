@@ -40,6 +40,9 @@ func EditFILE(text [][]string) string {
 					if j < len(text[i])-1 && checkCase(text[i][j+1]) {
 						sCase := "up"
 						numWord, _ := strconv.Atoi(text[i][j+1][:len(text[i][j+1])-1])
+						if numWord < 0 {
+							numWord = 0
+						}
 						modifiedLine := SpecialCase(text[i][:j], sCase, numWord)
 						modifiedLine = append(modifiedLine, text[i][j+2:]...)
 						text[i] = modifiedLine
@@ -49,6 +52,9 @@ func EditFILE(text [][]string) string {
 					if j < len(text[i])-1 && checkCase(text[i][j+1]) {
 						sCase := "low"
 						numWord, _ := strconv.Atoi(text[i][j+1][:len(text[i][j+1])-1])
+						if numWord < 0 {
+							numWord = 0
+						}
 						modifiedLine := SpecialCase(text[i][:j], sCase, numWord)
 						modifiedLine = append(modifiedLine, text[i][j+2:]...)
 						text[i] = modifiedLine
@@ -58,6 +64,9 @@ func EditFILE(text [][]string) string {
 					if j < len(text[i])-1 && checkCase(text[i][j+1]) {
 						sCase := "cap"
 						numWord, _ := strconv.Atoi(text[i][j+1][:len(text[i][j+1])-1])
+						if numWord < 0 {
+							numWord = 0
+						}
 						modifiedLine := SpecialCase(text[i][:j], sCase, numWord)
 						modifiedLine = append(modifiedLine, text[i][j+2:]...)
 						text[i] = modifiedLine
@@ -70,6 +79,7 @@ func EditFILE(text [][]string) string {
 	text = AtoAN(text)
 	preOutputText := formatOutput(text)
 	finalText := ModifiePunctuation(preOutputText)
+	// fmt.Println(finalText)
 	return finalText
 }
 
@@ -83,7 +93,10 @@ func isModifier(word string) bool {
 
 func checkCase(text string) bool {
 	if strings.HasSuffix(text, ")") && len(text) > 1 {
-		for _, char := range text[:len(text)-1] {
+		for i, char := range text[:len(text)-1] {
+			if i == 0 && (char == '-' || char == '+') {
+				continue
+			}
 			if char < '0' || char > '9' {
 				return false
 			}

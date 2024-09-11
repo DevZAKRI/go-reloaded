@@ -1,6 +1,7 @@
 package reloadgo
 
 import (
+	"fmt"
 	"strings"
 	"unicode"
 )
@@ -42,6 +43,7 @@ func ModifiePunctuation(text string) string {
 		}
 		newText += string(char)
 	}
+	// fmt.Println(newText)
 	newText = FixQuote(newText)
 	return newText
 }
@@ -52,6 +54,7 @@ func isSpace(char rune) bool {
 
 func FixQuote(input string) string {
 	lines := strings.Split(input, "\n")
+	fmt.Println(lines)
 	var finalResult strings.Builder
 
 	for _, line := range lines {
@@ -102,5 +105,5 @@ func FixQuote(input string) string {
 		finalResult.WriteRune('\n')
 	}
 
-	return strings.TrimSpace(finalResult.String())
+	return finalResult.String()
 }
