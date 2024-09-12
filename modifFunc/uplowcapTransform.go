@@ -43,7 +43,7 @@ func SpecialCase(text []string, sCase string, nWords int) []string {
 		case "low":
 			text[len(text)-1-k] = strings.ToLower(text[len(text)-1-k])
 		case "cap":
-			text[len(text)-1-k] = CapWord(text[len(text)-1-k])
+			text[len(text)-1-k] = CapWord(strings.ToLower(text[len(text)-1-k]))
 		}
 	}
 	return text
