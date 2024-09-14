@@ -63,7 +63,7 @@ func FixQuote(input string) string {
 		for i, ch := range line {
 			if ch == '\'' {
 				QuoteinsideWord := false
-				if i > 0 && !unicode.IsSpace(rune(line[i-1])) && i < len(line)-1 && !unicode.IsSpace(rune(line[i+1])) {
+				if i > 0 && !unicode.IsSpace(rune(line[i-1])) && !IsQuote(rune(line[i-1])) && i < len(line)-1 && !unicode.IsSpace(rune(line[i+1])) && !IsQuote(rune(line[i+1])) {
 					QuoteinsideWord = true
 				}
 
@@ -82,7 +82,7 @@ func FixQuote(input string) string {
 						result.WriteString(tempResult[:startQuote+1])
 						result.WriteString(quotedContent)
 						result.WriteRune('\'')
-						if i+1 < len(line) && !isSpace(rune(line[i+1])) {
+						if i+1 < len(line) && !isSpace(rune(line[i+1])) && !IsQuote(rune(line[i+1])) {
 							result.WriteRune(' ')
 						}
 
@@ -105,4 +105,8 @@ func FixQuote(input string) string {
 	}
 
 	return finalResult.String()
+}
+
+func IsQuote(char rune) bool {
+	return char == '\''
 }
